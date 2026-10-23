@@ -1,0 +1,151 @@
+{
+    "geode": "5.10.1",
+    "gd": {
+        "android": "2.2081",
+        "win": "2.2081",
+        "mac": "2.2081",
+        "ios": "2.2081"
+    },
+    "id": "dev.tickassist",
+    "name": "Tick Assist (Click Auto-Correct)",
+    "version": "v1.0.0",
+    "developer": "TickAssistDev",
+    "description": "Mobile & desktop 240 TPS click auto-corrector that delays early clicks (1-16 ticks) using a 480-tick survival lookahead solver.",
+    "tags": [
+        "gameplay",
+        "utility",
+        "enhancement",
+        "offline"
+    ],
+    "settings": {
+        "core-header": {
+            "type": "title",
+            "name": "Core Auto-Correct Engine",
+            "description": "Main controls for the 240 TPS click lookahead & early-click auto-corrector."
+        },
+        "enabled": {
+            "type": "bool",
+            "name": "Enable Click Auto-Correct",
+            "description": "Automatically intercepts early clicks and delays them to the earliest safe tick that passes upcoming obstacles.",
+            "default": true
+        },
+        "max-early-ticks": {
+            "type": "int",
+            "name": "Early Click Window (Ticks)",
+            "description": "Maximum number of ticks (1 to 16 at 240 TPS) your click can be early and still get auto-corrected to a passing tick.",
+            "default": 8,
+            "min": 1,
+            "max": 16,
+            "control": {
+                "slider": true,
+                "slider-step": 1,
+                "arrows": true,
+                "arrow-step": 1,
+                "input": true
+            }
+        },
+        "lookahead-ticks": {
+            "type": "int",
+            "name": "Lookahead Check Horizon (Ticks)",
+            "description": "How many physics ticks ahead (on 240 TPS) the simulator checks to verify you survive and pass the click check (480 ticks = 2.0 seconds at 240 TPS).",
+            "default": 480,
+            "min": 60,
+            "max": 960,
+            "control": {
+                "slider": true,
+                "slider-step": 10,
+                "arrows": true,
+                "arrow-step": 10,
+                "big-arrows": true,
+                "big-arrow-step": 60,
+                "input": true
+            }
+        },
+        "base-tps": {
+            "type": "int",
+            "name": "Simulation Tick Rate (TPS)",
+            "description": "Physics tick rate used by the lookahead solver and sub-tick delay queue (standard is 240 TPS).",
+            "default": 240,
+            "min": 60,
+            "max": 480,
+            "control": {
+                "slider": true,
+                "slider-step": 60,
+                "arrows": true,
+                "arrow-step": 15,
+                "input": true
+            }
+        },
+        "targets-header": {
+            "type": "title",
+            "name": "What to Auto-Correct From",
+            "description": "Choose which obstacle types, gamemodes, and mechanics the solver checks and auto-corrects."
+        },
+        "correct-ground-jumps": {
+            "type": "bool",
+            "name": "Ground Spikes & Ledge Jumps",
+            "description": "Auto-corrects early ground jumps (Cube, Robot, Ball, Spider) when clicking 1-16 ticks before landing or before clearing a spike gap.",
+            "default": true,
+            "enable-if": "enabled"
+        },
+        "correct-orbs": {
+            "type": "bool",
+            "name": "Jump Orbs, Dash Rings & Portals",
+            "description": "Auto-corrects clicks that are 1-16 ticks early before entering an orb/ring hitbox or where an immediate orb click hits a hazard.",
+            "default": true,
+            "enable-if": "enabled"
+        },
+        "correct-air-modes": {
+            "type": "bool",
+            "name": "Ship, Wave, UFO & Swing Corridors",
+            "description": "Delays early inputs in flying/air modes if pressing immediately would clip a ceiling/floor spike or saw within the lookahead window.",
+            "default": true,
+            "enable-if": "enabled"
+        },
+        "correct-releases": {
+            "type": "bool",
+            "name": "Auto-Correct Early Releases",
+            "description": "Also checks button releases (Ship, Wave, Robot jump hold, Dash orbs) and delays releasing by 1-16 ticks if releasing too early causes death.",
+            "default": true,
+            "enable-if": "enabled"
+        },
+        "preserve-hold-length": {
+            "type": "bool",
+            "name": "Preserve Hold Duration After Delay",
+            "description": "When a press is delayed by N ticks, extends the corresponding release by N ticks so short micro-clicks are never eaten.",
+            "default": true,
+            "enable-if": "enabled"
+        },
+        "correct-player2": {
+            "type": "bool",
+            "name": "Dual Mode / Player 2 Support",
+            "description": "Applies the 240 TPS lookahead auto-corrector to Player 2 clicks in dual mode.",
+            "default": true,
+            "enable-if": "enabled"
+        },
+        "corner-rescue": {
+            "type": "bool",
+            "name": "Last-Tick Corner Death Rescue",
+            "description": "If a hazard collision happens while a valid passing tick is queued within the 1-16 tick window, executes the queued jump immediately to save the attempt.",
+            "default": true,
+            "enable-if": "enabled"
+        },
+        "ui-header": {
+            "type": "title",
+            "name": "Mobile UI & HUD Overlay",
+            "description": "Configure the in-game mobile quick-settings button and live correction HUD."
+        },
+        "show-mobile-button": {
+            "type": "bool",
+            "name": "Show In-Game Mobile UI Button",
+            "description": "Adds a compact semi-transparent 'TA' button at the top of the screen during gameplay and in the Pause Menu to open the Tick Assist UI anytime.",
+            "default": true
+        },
+        "show-hud": {
+            "type": "bool",
+            "name": "Show Live Tick Correction HUD",
+            "description": "Displays a small status label showing when a click was auto-corrected (e.g. 'Corrected +4t | Safe 480t').",
+            "default": true
+        }
+    }
+}
